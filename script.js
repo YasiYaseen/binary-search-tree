@@ -8,7 +8,28 @@ class Node{
 
 class Tree{
     constructor(array){
-this.root = buildTree(array,0,array.length-1);
+     this.root = buildTree(array,0,array.length-1);
+    }
+    insert(value,root=this.root){
+      if(this.root==null){
+        this.root =new Node(value);
+        return;
+      }
+
+      if(value<root.value){
+        if(root.left==null){
+          root.left=new Node(value);
+          return;
+        }
+        this.insert(value,root.left);
+      }
+      if(value>root.value){
+        if(root.right==null){
+          root.right=new Node(value);
+          return;
+        }
+        this.insert(value,root.right);
+      }
     }
 }
 const buildTree = (array,start,end)=>{
@@ -22,10 +43,32 @@ const buildTree = (array,start,end)=>{
     return node;
 
 }
+// by TOP 
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+    if (node === null) {
+      return;
+    }
+    if (node.right !== null) {
+      prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
+    if (node.left !== null) {
+      prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
+  };
+
+   
+
 
 const array=[1,2,3,4,5,6,7];
 const bst =new Tree(array);
-console.log(bst.root);
+bst.insert(12);
+bst.insert(10)
+bst.insert(11)
+prettyPrint(bst.root);
+
+
+
 // The Odin Project Assignment
 
 //1 Build a Node class/factory. It should have an attribute for the data it stores as well as its left and right children.
@@ -48,6 +91,7 @@ console.log(bst.root);
 //     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
 //   }
 // };
+
 // Write insert and delete functions that accepts a value to insert/delete. You’ll have to deal with several cases for delete, such as when a node has children or not. If you need additional resources, check out these two articles on inserting and deleting, or this video with several visual examples.
 
 // You may be tempted to implement these methods using the original input array used to build the tree, but it’s important for the efficiency of these operations that you don’t do this. If we refer back to the Big O Cheatsheet, we’ll see that binary search trees can insert/delete in O(log n) time, which is a significant performance boost over arrays for the same operations. To get this added efficiency, your implementation of these methods should traverse the tree and manipulate the nodes and their connections.
