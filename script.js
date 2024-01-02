@@ -15,21 +15,27 @@ class Tree{
         this.root =new Node(value);
         return;
       }
+      if(root==null)return new Node(value);
+      if(value<root.value)root.left=this.insert(value,root.left);
+      if(value>root.value)root.right=this.insert(value,root.right);
 
-      if(value<root.value){
-        if(root.left==null){
-          root.left=new Node(value);
-          return;
-        }
-        this.insert(value,root.left);
-      }
-      if(value>root.value){
-        if(root.right==null){
-          root.right=new Node(value);
-          return;
-        }
-        this.insert(value,root.right);
-      }
+      return root;
+
+// unoptimized code
+      // if(value<root.value){
+      //   if(root.left==null){
+      //     root.left=new Node(value);
+      //     return;
+      //   }
+      //   this.insert(value,root.left);
+      // }
+      // if(value>root.value){
+      //   if(root.right==null){
+      //     root.right=new Node(value);
+      //     return;
+      //   }
+      //   this.insert(value,root.right);
+      // }
     }
 }
 const buildTree = (array,start,end)=>{
@@ -65,6 +71,8 @@ const bst =new Tree(array);
 bst.insert(12);
 bst.insert(10)
 bst.insert(11)
+bst.insert(15)
+bst.insert(15)
 prettyPrint(bst.root);
 
 
